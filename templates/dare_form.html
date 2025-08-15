@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="text-center mb-5">
+      <h1>
+        {% if form.instance.pk %}
+          <i class="fas fa-edit"></i> Edit Dare
+        {% else %}
+          <i class="fas fa-plus-circle"></i> Create New Dare
+        {% endif %}
+      </h1>
+      <p class="lead" style="font-size: 1.2rem; color: #7f8c8d;">Share an exciting challenge with the community!</p>
+    </div>
+    
+    <form method="post" class="shadow-lg">
+      {% csrf_token %}
+      
+      <div class="mb-4">
+        <label for="{{ form.title.id_for_label }}" class="form-label">
+          <i class="fas fa-heading"></i> Dare Title
+        </label>
+        {{ form.title }}
+        {% if form.title.errors %}
+          <div class="text-danger mt-2">
+            {% for error in form.title.errors %}
+              <small>{{ error }}</small>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      
+      <div class="mb-4">
+        <label for="{{ form.category.id_for_label }}" class="form-label">
+          <i class="fas fa-tags"></i> Category
+        </label>
+        {{ form.category }}
+        {% if form.category.errors %}
+          <div class="text-danger mt-2">
+            {% for error in form.category.errors %}
+              <small>{{ error }}</small>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      
+      <div class="mb-5">
+        <label for="{{ form.description.id_for_label }}" class="form-label">
+          <i class="fas fa-align-left"></i> Description
+        </label>
+        {{ form.description }}
+        {% if form.description.errors %}
+          <div class="text-danger mt-2">
+            {% for error in form.description.errors %}
+              <small>{{ error }}</small>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      
+      <div class="d-grid gap-3">
+        <button type="submit" class="btn btn-primary btn-lg py-3">
+          <i class="fas fa-save"></i> 
+          {% if form.instance.pk %}Update Dare{% else %}Create Dare{% endif %}
+        </button>
+        <a href="{% url 'dare_list' %}" class="btn btn-secondary btn-lg py-3">
+          <i class="fas fa-times"></i> Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
