@@ -8,7 +8,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-1-2kv@wzc#y258(oji%8-q#@irdi6j-cfihgd!(ey#ap6!9+)6')
 
 # Allowed hosts
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=lambda v: [s.strip() for s in v.split(',')])
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='web-production-ff49c.up.railway.app,localhost,127.0.0.1', cast=lambda v: [s.strip() for s in v.split(',')])
 
 # Database configuration for production
 DATABASES = {
