@@ -6,7 +6,7 @@
   <title>Dare Exchange</title>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -15,326 +15,346 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
   <style>
-    html {
-      font-size: 75%;
+    :root {
+      --primary-color: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary-color: #f1f5f9;
+      --accent-color: #06b6d4;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --danger-color: #ef4444;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --border-color: #e2e8f0;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
     
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: #222;
+      color: var(--text-primary);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    #particles-js {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: transparent;
-    }
-
-    /* Animated background */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      z-index: -2;
-      animation: gradientShift 15s ease infinite;
-    }
-
-    @keyframes gradientShift {
-      0%, 100% {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      }
-      25% {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      }
-      50% {
-        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      }
-      75% {
-        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-      }
-    }
-
-    /* Floating elements */
-    .floating-element {
-      position: absolute;
-      opacity: 0.1;
-      animation: float 6s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0px) rotate(0deg);
-      }
-      50% {
-        transform: translateY(-20px) rotate(180deg);
-      }
-    }
-
-    .floating-element:nth-child(1) {
-      top: 20%;
-      left: 10%;
-      animation-delay: 0s;
-    }
-
-    .floating-element:nth-child(2) {
-      top: 60%;
-      right: 10%;
-      animation-delay: 2s;
-    }
-
-    .floating-element:nth-child(3) {
-      bottom: 20%;
-      left: 20%;
-      animation-delay: 4s;
+      line-height: 1.6;
     }
 
     /* Navigation */
     .navbar {
       background: rgba(255, 255, 255, 0.95) !important;
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
       padding: 1rem 0;
-      transition: all 0.3s ease;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
     .navbar-brand {
       font-weight: 800 !important;
-      font-size: 1.8rem !important;
-      color: #667eea !important;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-      letter-spacing: 1px;
+      font-size: 1.5rem !important;
+      color: var(--primary-color) !important;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .navbar-brand:hover {
+      color: var(--primary-dark) !important;
     }
 
     .navbar-nav .nav-link {
-      color: #333 !important;
-      font-weight: 600;
-      margin: 0 0.5rem;
+      color: var(--text-primary) !important;
+      font-weight: 500;
       padding: 0.5rem 1rem !important;
-      border-radius: 25px;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      border-radius: 0.5rem;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .navbar-nav .nav-link:hover {
-      background: linear-gradient(135deg, #667eea, #764ba2);
+      background: var(--secondary-color);
+      color: var(--primary-color) !important;
+    }
+
+    .navbar-nav .nav-link.active {
+      background: var(--primary-color);
       color: white !important;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
     }
 
     .navbar-text {
-      color: #000 !important;
-      font-weight: 600;
-      margin-right: 1rem;
+      color: var(--text-primary) !important;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .logout-form {
-      max-width: none !important;
-      margin: 0 !important;
-      background: none !important;
-      padding: 0 !important;
-      border-radius: 0 !important;
-      box-shadow: none !important;
-      backdrop-filter: none !important;
-      border: none !important;
+    .btn-outline-primary {
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+      font-weight: 500;
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-outline-primary:hover {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+      color: white;
     }
 
     /* Main content */
-    .container {
-      flex: 1;
-      padding: 2rem 0;
-      position: relative;
-      z-index: 1;
+    .main-content {
+      padding: 3rem 0;
     }
 
-    /* Cards */
-    .card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 20px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-      overflow: hidden;
+    .hero-section {
+      text-align: center;
+      margin-bottom: 3rem;
+      color: white;
     }
 
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
-    .card-title {
-      color: #2c3e50;
-      font-weight: 700;
+    .hero-subtitle {
+      font-size: 1.25rem;
+      font-weight: 400;
+      margin-bottom: 2rem;
+      opacity: 0.9;
     }
 
-    .card-text {
-      color: #7f8c8d;
-      line-height: 1.6;
-    }
-
-    /* Buttons */
     .btn-primary {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: var(--primary-color);
       border: none;
-      border-radius: 25px;
-      padding: 0.75rem 2rem;
+      border-radius: 0.75rem;
+      padding: 0.875rem 2rem;
       font-weight: 600;
-      letter-spacing: 0.5px;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-md);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
-      background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-lg);
     }
 
-    .btn-warning {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      border: none;
-      border-radius: 25px;
-      color: white;
-      font-weight: 600;
+    /* Cards */
+    .dare-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      box-shadow: var(--shadow-md);
       transition: all 0.3s ease;
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
 
-    .btn-warning:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+    .dare-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--primary-color);
     }
 
-    .btn-danger {
-      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-      border: none;
-      border-radius: 25px;
-      font-weight: 600;
-      transition: all 0.3s ease;
+    .card-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
     }
 
-    .btn-danger:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+      line-height: 1.4;
+    }
+
+    .card-text {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      flex-grow: 1;
     }
 
     /* Badges */
     .badge {
-      border-radius: 15px;
-      padding: 0.5rem 1rem;
+      font-weight: 500;
+      font-size: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      border-radius: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.025em;
+    }
+
+    .badge-category {
+      background: var(--accent-color);
+      color: white;
+    }
+
+    .badge-status {
       font-weight: 600;
-      letter-spacing: 0.3px;
     }
 
-    /* Form styling */
-    form {
-      max-width: 700px;
-      margin: 0 auto 3rem auto;
-      background: rgba(255,255,255,0.95);
-      padding: 3rem;
-      border-radius: 25px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.2);
+    .badge-verified {
+      background: var(--success-color);
+      color: white;
     }
 
-    .form-control {
-      border-radius: 15px;
-      border: 2px solid #e9ecef;
-      padding: 15px 20px;
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
-      background: rgba(255,255,255,0.9);
+    .badge-pending {
+      background: var(--warning-color);
+      color: white;
     }
 
-    .form-control:focus {
-      border-color: #667eea;
-      box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-      background: rgba(255,255,255,1);
+    .badge-accepted {
+      background: var(--accent-color);
+      color: white;
     }
 
-    .form-label {
-      font-weight: 600;
-      color: #2c3e50;
-      margin-bottom: 0.8rem;
-      font-size: 1.1rem;
+    .badge-available {
+      background: var(--text-muted);
+      color: white;
     }
 
-    /* Footer */
-    footer {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 2rem 0;
+    .badge-user {
+      background: var(--primary-color);
+      color: white;
+      font-weight: 500;
+    }
+
+    /* User info */
+    .user-info {
+      margin-bottom: 1rem;
+    }
+
+    .user-info p {
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .rating-info {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: var(--warning-color);
+      font-weight: 500;
+    }
+
+    /* Action button */
+    .card-action {
       margin-top: auto;
+      padding-top: 1rem;
+    }
+
+    .btn-card {
+      width: 100%;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      padding: 0.75rem;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    /* Grid layout */
+    .dares-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
     }
 
     /* Responsive */
     @media (max-width: 768px) {
-      .navbar-brand {
-        font-size: 1.5rem !important;
+      .hero-title {
+        font-size: 2rem;
       }
       
-      .container {
-        padding: 1rem;
+      .hero-subtitle {
+        font-size: 1rem;
       }
       
-      .card {
-        margin-bottom: 1.5rem;
+      .dares-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .main-content {
+        padding: 2rem 0;
       }
     }
 
-    /* Animation for page load */
+    /* Animations */
     .fade-in {
-      animation: fadeIn 1s ease-in;
+      animation: fadeIn 0.6s ease-out;
     }
 
     @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(20px);
       }
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
+
+    .stagger-animation {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    .stagger-animation:nth-child(1) { animation-delay: 0.1s; }
+    .stagger-animation:nth-child(2) { animation-delay: 0.2s; }
+    .stagger-animation:nth-child(3) { animation-delay: 0.3s; }
+    .stagger-animation:nth-child(4) { animation-delay: 0.4s; }
+    .stagger-animation:nth-child(5) { animation-delay: 0.5s; }
+    .stagger-animation:nth-child(6) { animation-delay: 0.6s; }
   </style>
 </head>
 
 <body>
-  <!-- Floating background elements -->
-  <div class="floating-element">
-    <i class="fas fa-star" style="font-size: 3rem; color: white;"></i>
-  </div>
-  <div class="floating-element">
-    <i class="fas fa-heart" style="font-size: 2.5rem; color: white;"></i>
-  </div>
-  <div class="floating-element">
-    <i class="fas fa-bolt" style="font-size: 3.5rem; color: white;"></i>
-  </div>
-
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-light">
+  <nav class="navbar navbar-expand-lg">
     <div class="container">
       <a class="navbar-brand" href="./index.html">
-        <i class="fas fa-fire"></i> Dare Exchange
+        <i class="fas fa-fire"></i>
+        Dare Exchange
       </a>
       
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -344,23 +364,27 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link" href="./index.html">
-              <i class="fas fa-home"></i> All Dares
+            <a class="nav-link active" href="./index.html">
+              <i class="fas fa-home"></i>
+              All Dares
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="./create.html">
-              <i class="fas fa-plus-circle"></i> Post Dare
+              <i class="fas fa-plus-circle"></i>
+              Post Dare
             </a>
           </li>
         </ul>
         <ul class="navbar-nav align-items-center">
-          <li class="nav-item d-flex align-items-center">
-            <span class="navbar-text me-3" style="color: #000 !important; font-size: 1rem; font-weight: 600; letter-spacing: 0.3px; margin-bottom: 0;">
-              <i class="fas fa-user"></i> Welcome, <strong>Demo User</strong>!
+          <li class="nav-item d-flex align-items-center gap-3">
+            <span class="navbar-text">
+              <i class="fas fa-user"></i>
+              Welcome, <strong>Demo User</strong>!
             </span>
-            <a href="./login.html" class="btn btn-outline-dark btn-sm">
-              <i class="fas fa-sign-out-alt"></i> Login
+            <a href="./login.html" class="btn btn-outline-primary btn-sm">
+              <i class="fas fa-sign-in-alt"></i>
+              Login
             </a>
           </li>
         </ul>
@@ -369,184 +393,202 @@
   </nav>
 
   <!-- Main Content -->
-  <div class="container fade-in">
-    <div class="text-center mb-5">
-      <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.2rem;">🎯 Dare Exchange 🎯</h1>
-      <p class="lead" style="font-size: 1.2rem; color: #2c3e50; font-weight: 600; margin-bottom: 1.5rem;">Challenge yourself and others with exciting dares!</p>
-      <a href="./create.html" class="btn btn-primary btn-lg mt-3" style="font-size: 1rem; padding: 0.8rem 1.5rem;">
-        <i class="fas fa-plus"></i> Create New Dare
-      </a>
-    </div>
+  <div class="main-content">
+    <div class="container">
+      <!-- Hero Section -->
+      <div class="hero-section fade-in">
+        <h1 class="hero-title">🎯 Dare Exchange</h1>
+        <p class="hero-subtitle">Challenge yourself and others with exciting dares!</p>
+        <a href="./create.html" class="btn btn-primary btn-lg">
+          <i class="fas fa-plus"></i>
+          Create New Dare
+        </a>
+      </div>
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 justify-content-center">
-      <!-- Sample Dare 1 -->
-      <div class="col">
-        <div class="card h-100" style="min-height: 400px;">
-          <div class="card-body d-flex flex-column p-4">
-            <h5 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.3;">Create a 30-second dance video</h5>
-            <p class="card-text flex-grow-1" style="font-size: 1rem; line-height: 1.5; margin-bottom: 1.5rem;">Show off your best dance moves in a creative 30-second video. Be original and have fun!</p>
+      <!-- Dares Grid -->
+      <div class="dares-grid">
+        <!-- Sample Dare 1 -->
+        <div class="dare-card stagger-animation">
+          <div class="card-body">
+            <h5 class="card-title">Create a 30-second dance video</h5>
+            <p class="card-text">Show off your best dance moves in a creative 30-second video. Be original and have fun!</p>
             
-            <div class="mb-3">
-              <span class="badge bg-info me-2" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">Entertainment</span>
-              <span class="badge bg-success" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">✅ Verified Complete</span>
+            <div class="d-flex gap-2 mb-3 flex-wrap">
+              <span class="badge badge-category">Entertainment</span>
+              <span class="badge badge-verified">✅ Verified Complete</span>
             </div>
             
-            <div class="mb-4">
-              <p class="mb-2" style="font-size: 1rem; color: #7f8c8d; line-height: 1.4;">
-                <strong>Posted by:</strong> <span class="badge bg-primary" style="font-size: 0.85rem;">Arjun</span>
+            <div class="user-info">
+              <p>
+                <i class="fas fa-user-edit"></i>
+                <strong>Posted by:</strong> 
+                <span class="badge badge-user">Arjun</span>
               </p>
-              <p class="mb-2" style="font-size: 1rem; color: #7f8c8d; line-height: 1.4;">
-                <strong>Accepted by:</strong> <span class="badge bg-success" style="font-size: 0.85rem;">Priya</span>
+              <p>
+                <i class="fas fa-user-check"></i>
+                <strong>Accepted by:</strong> 
+                <span class="badge badge-user">Priya</span>
               </p>
-              <p class="mb-0" style="font-size: 1rem; color: #7f8c8d; line-height: 1.4;">
-                <strong>Rating:</strong> <span class="text-warning">⭐ 5 ratings</span>
+              <p class="rating-info">
+                <i class="fas fa-star"></i>
+                <strong>4.8/5</strong> (5 ratings)
               </p>
             </div>
             
-            <div class="mt-auto">
-              <a href="./dare-detail.html" class="btn btn-primary w-100" style="font-size: 1rem; padding: 0.75rem;">
-                <i class="fas fa-eye"></i> View Details
+            <div class="card-action">
+              <a href="./dare-detail.html" class="btn btn-primary btn-card">
+                <i class="fas fa-eye"></i>
+                View Details
               </a>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Sample Dare 2 -->
-      <div class="col">
-        <div class="card h-100" style="min-height: 400px;">
-          <div class="card-body d-flex flex-column p-4">
-            <h5 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.3;">Learn a new skill in 24 hours</h5>
-            <p class="card-text flex-grow-1" style="font-size: 1rem; line-height: 1.5; margin-bottom: 1.5rem;">Pick any skill you've never tried before and spend 24 hours learning it. Document your progress!</p>
+        <!-- Sample Dare 2 -->
+        <div class="dare-card stagger-animation">
+          <div class="card-body">
+            <h5 class="card-title">Learn a new skill in 24 hours</h5>
+            <p class="card-text">Pick any skill you've never tried before and spend 24 hours learning it. Document your progress!</p>
             
-            <div class="mb-3">
-              <span class="badge bg-info me-2" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">Education</span>
-              <span class="badge bg-info" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">🎯 Accepted</span>
+            <div class="d-flex gap-2 mb-3 flex-wrap">
+              <span class="badge badge-category">Education</span>
+              <span class="badge badge-accepted">🎯 Accepted</span>
             </div>
             
-            <div class="mb-4">
-              <p class="mb-2" style="font-size: 1rem; color: #7f8c8d; line-height: 1.4;">
-                <strong>Posted by:</strong> <span class="badge bg-primary" style="font-size: 0.85rem;">Kavya</span>
+            <div class="user-info">
+              <p>
+                <i class="fas fa-user-edit"></i>
+                <strong>Posted by:</strong> 
+                <span class="badge badge-user">Kavya</span>
               </p>
-              <p class="mb-2" style="font-size: 1rem; color: #7f8c8d; line-height: 1.4;">
-                <strong>Accepted by:</strong> <span class="badge bg-success" style="font-size: 0.85rem;">Rohit</span>
+              <p>
+                <i class="fas fa-user-check"></i>
+                <strong>Accepted by:</strong> 
+                <span class="badge badge-user">Rohit</span>
               </p>
             </div>
             
-            <div class="mt-auto">
-              <a href="./dare-detail.html" class="btn btn-primary w-100" style="font-size: 1rem; padding: 0.75rem;">
-                <i class="fas fa-eye"></i> View Details
+            <div class="card-action">
+              <a href="./dare-detail.html" class="btn btn-primary btn-card">
+                <i class="fas fa-eye"></i>
+                View Details
               </a>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Sample Dare 3 -->
-      <div class="col">
-        <div class="card h-100" style="min-height: 400px;">
-          <div class="card-body d-flex flex-column p-4">
-            <h5 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.3;">Cook a meal from a different culture</h5>
-            <p class="card-text flex-grow-1" style="font-size: 1rem; line-height: 1.5; margin-bottom: 1.5rem;">Research and cook an authentic dish from a culture you're not familiar with. Share the results!</p>
+        <!-- Sample Dare 3 -->
+        <div class="dare-card stagger-animation">
+          <div class="card-body">
+            <h5 class="card-title">Cook a meal from a different culture</h5>
+            <p class="card-text">Research and cook an authentic dish from a culture you're not familiar with. Share the results!</p>
             
-            <div class="mb-3">
-              <span class="badge bg-info me-2" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">Lifestyle</span>
-              <span class="badge bg-secondary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">🔥 Available</span>
+            <div class="d-flex gap-2 mb-3 flex-wrap">
+              <span class="badge badge-category">Lifestyle</span>
+              <span class="badge badge-available">🔥 Available</span>
             </div>
             
-            <div class="mb-4">
-              <p class="mb-2" style="font-size: 1rem; color: #7f8c8d; line-height: 1.4;">
-                <strong>Posted by:</strong> <span class="badge bg-primary" style="font-size: 0.85rem;">Aditya</span>
+            <div class="user-info">
+              <p>
+                <i class="fas fa-user-edit"></i>
+                <strong>Posted by:</strong> 
+                <span class="badge badge-user">Aditya</span>
               </p>
             </div>
             
-            <div class="mt-auto">
-              <a href="./dare-detail.html" class="btn btn-primary w-100" style="font-size: 1rem; padding: 0.75rem;">
-                <i class="fas fa-eye"></i> View Details
+            <div class="card-action">
+              <a href="./dare-detail.html" class="btn btn-primary btn-card">
+                <i class="fas fa-eye"></i>
+                View Details
               </a>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Sample Dare 4 -->
-      <div class="col">
-        <div class="card h-100" style="min-height: 400px;">
-          <div class="card-body d-flex flex-column p-4">
-            <h5 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.3;">Write and perform a 2-minute comedy skit</h5>
-            <p class="card-text flex-grow-1" style="font-size: 1rem; line-height: 1.5; margin-bottom: 1.5rem;">Create an original comedy skit and perform it. Make people laugh with your creativity!</p>
+        <!-- Sample Dare 4 -->
+        <div class="dare-card stagger-animation">
+          <div class="card-body">
+            <h5 class="card-title">Write and perform a 2-minute comedy skit</h5>
+            <p class="card-text">Create an original comedy skit and perform it. Make people laugh with your creativity!</p>
             
-            <div class="mb-3">
-              <span class="badge bg-info me-2" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">Entertainment</span>
-              <span class="badge bg-warning" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">⏳ Awaiting Verification</span>
+            <div class="d-flex gap-2 mb-3 flex-wrap">
+              <span class="badge badge-category">Entertainment</span>
+              <span class="badge badge-pending">⏳ Awaiting Verification</span>
             </div>
             
-            <div class="mb-4">
-              <p class="mb-2" style="font-size: 1rem; color: #7f8c8d; line-height: 1.4;">
-                <strong>Posted by:</strong> <span class="badge bg-primary" style="font-size: 0.85rem;">Priya</span>
+            <div class="user-info">
+              <p>
+                <i class="fas fa-user-edit"></i>
+                <strong>Posted by:</strong> 
+                <span class="badge badge-user">Priya</span>
               </p>
-              <p class="mb-2" style="font-size: 1rem; color: #7f8c8d; line-height: 1.4;">
-                <strong>Accepted by:</strong> <span class="badge bg-success" style="font-size: 0.85rem;">Arjun</span>
+              <p>
+                <i class="fas fa-user-check"></i>
+                <strong>Accepted by:</strong> 
+                <span class="badge badge-user">Arjun</span>
               </p>
             </div>
             
-            <div class="mt-auto">
-              <a href="./dare-detail.html" class="btn btn-primary w-100" style="font-size: 1rem; padding: 0.75rem;">
-                <i class="fas fa-eye"></i> View Details
+            <div class="card-action">
+              <a href="./dare-detail.html" class="btn btn-primary btn-card">
+                <i class="fas fa-eye"></i>
+                View Details
               </a>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Sample Dare 5 -->
-      <div class="col">
-        <div class="card h-100" style="min-height: 400px;">
-          <div class="card-body d-flex flex-column p-4">
-            <h5 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.3;">Take a photo in 5 different countries</h5>
-            <p class="card-text flex-grow-1" style="font-size: 1rem; line-height: 1.5; margin-bottom: 1.5rem;">Travel and take a selfie in 5 different countries. Show the world your adventurous spirit!</p>
+        <!-- Sample Dare 5 -->
+        <div class="dare-card stagger-animation">
+          <div class="card-body">
+            <h5 class="card-title">Take a photo in 5 different countries</h5>
+            <p class="card-text">Travel and take a selfie in 5 different countries. Show the world your adventurous spirit!</p>
             
-            <div class="mb-3">
-              <span class="badge bg-info me-2" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">Travel</span>
-              <span class="badge bg-secondary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">🔥 Available</span>
+            <div class="d-flex gap-2 mb-3 flex-wrap">
+              <span class="badge badge-category">Travel</span>
+              <span class="badge badge-available">🔥 Available</span>
             </div>
             
-            <div class="mb-4">
-              <p class="mb-2" style="font-size: 1rem; color: #7f8c8d; line-height: 1.4;">
-                <strong>Posted by:</strong> <span class="badge bg-primary" style="font-size: 0.85rem;">Kavya</span>
+            <div class="user-info">
+              <p>
+                <i class="fas fa-user-edit"></i>
+                <strong>Posted by:</strong> 
+                <span class="badge badge-user">Kavya</span>
               </p>
             </div>
             
-            <div class="mt-auto">
-              <a href="./dare-detail.html" class="btn btn-primary w-100" style="font-size: 1rem; padding: 0.75rem;">
-                <i class="fas fa-eye"></i> View Details
+            <div class="card-action">
+              <a href="./dare-detail.html" class="btn btn-primary btn-card">
+                <i class="fas fa-eye"></i>
+                View Details
               </a>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Sample Dare 6 -->
-      <div class="col">
-        <div class="card h-100" style="min-height: 400px;">
-          <div class="card-body d-flex flex-column p-4">
-            <h5 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.3;">Build something useful from recycled materials</h5>
-            <p class="card-text flex-grow-1" style="font-size: 1rem; line-height: 1.5; margin-bottom: 1.5rem;">Create a functional item using only recycled or upcycled materials. Be creative and eco-friendly!</p>
+        <!-- Sample Dare 6 -->
+        <div class="dare-card stagger-animation">
+          <div class="card-body">
+            <h5 class="card-title">Build something useful from recycled materials</h5>
+            <p class="card-text">Create a functional item using only recycled or upcycled materials. Be creative and eco-friendly!</p>
             
-            <div class="mb-3">
-              <span class="badge bg-info me-2" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">DIY</span>
-              <span class="badge bg-secondary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">🔥 Available</span>
+            <div class="d-flex gap-2 mb-3 flex-wrap">
+              <span class="badge badge-category">DIY</span>
+              <span class="badge badge-available">🔥 Available</span>
             </div>
             
-            <div class="mb-4">
-              <p class="mb-2" style="font-size: 1rem; color: #7f8c8d; line-height: 1.4;">
-                <strong>Posted by:</strong> <span class="badge bg-primary" style="font-size: 0.85rem;">Rohit</span>
+            <div class="user-info">
+              <p>
+                <i class="fas fa-user-edit"></i>
+                <strong>Posted by:</strong> 
+                <span class="badge badge-user">Rohit</span>
               </p>
             </div>
             
-            <div class="mt-auto">
-              <a href="./dare-detail.html" class="btn btn-primary w-100" style="font-size: 1rem; padding: 0.75rem;">
-                <i class="fas fa-eye"></i> View Details
+            <div class="card-action">
+              <a href="./dare-detail.html" class="btn btn-primary btn-card">
+                <i class="fas fa-eye"></i>
+                View Details
               </a>
             </div>
           </div>
@@ -555,40 +597,65 @@
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="text-center text-white">
-    <div class="container">
-      <p class="mb-0" style="font-size: 1rem; font-weight: 600;">
-        © 2024 Dare Exchange. Challenge yourself, inspire others! 🎯
-      </p>
-    </div>
-  </footer>
-
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
   <!-- Custom JavaScript -->
   <script>
-    // Add smooth scrolling and animations
     document.addEventListener('DOMContentLoaded', function() {
-      // Add fade-in animation to cards
-      const cards = document.querySelectorAll('.card');
-      cards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
-        card.classList.add('fade-in');
-      });
-      
-      // Add hover effects
+      // Add smooth hover effects
+      const cards = document.querySelectorAll('.dare-card');
       cards.forEach(card => {
         card.addEventListener('mouseenter', function() {
-          this.style.transform = 'translateY(-10px) scale(1.02)';
+          this.style.transform = 'translateY(-8px)';
         });
         
         card.addEventListener('mouseleave', function() {
-          this.style.transform = 'translateY(0) scale(1)';
+          this.style.transform = 'translateY(0)';
+        });
+      });
+      
+      // Add click animation to buttons
+      const buttons = document.querySelectorAll('.btn');
+      buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          const ripple = document.createElement('span');
+          const rect = this.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height);
+          const x = e.clientX - rect.left - size / 2;
+          const y = e.clientY - rect.top - size / 2;
+          
+          ripple.style.width = ripple.style.height = size + 'px';
+          ripple.style.left = x + 'px';
+          ripple.style.top = y + 'px';
+          ripple.classList.add('ripple');
+          
+          this.appendChild(ripple);
+          
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
         });
       });
     });
   </script>
+  
+  <style>
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(0);
+      animation: ripple-animation 0.6s linear;
+      pointer-events: none;
+    }
+    
+    @keyframes ripple-animation {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  </style>
 </body>
 </html>
