@@ -84,6 +84,7 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      cursor: pointer;
     }
 
     .navbar-nav .nav-link:hover {
@@ -221,10 +222,6 @@
       color: white;
     }
 
-    .badge-status {
-      font-weight: 600;
-    }
-
     .badge-verified {
       background: var(--success-color);
       color: white;
@@ -252,10 +249,6 @@
     }
 
     /* User info */
-    .user-info {
-      margin-bottom: 1rem;
-    }
-
     .user-info p {
       margin-bottom: 0.5rem;
       font-size: 0.875rem;
@@ -289,6 +282,24 @@
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-success {
+      background: var(--success-color);
+      color: white;
+    }
+
+    .btn-warning {
+      background: var(--warning-color);
+      color: white;
+    }
+
+    .btn-danger {
+      background: var(--danger-color);
+      color: white;
     }
 
     /* Grid layout */
@@ -297,6 +308,43 @@
       grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
       gap: 1.5rem;
       margin-top: 2rem;
+    }
+
+    /* Login/Register Modal */
+    .modal-content {
+      border-radius: 1rem;
+      border: none;
+      box-shadow: var(--shadow-xl);
+    }
+
+    .modal-header {
+      border-bottom: 1px solid var(--border-color);
+      padding: 1.5rem;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .form-control {
+      border: 2px solid var(--border-color);
+      border-radius: 0.5rem;
+      padding: 0.875rem 1rem;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      background: var(--bg-secondary);
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+      background: var(--bg-primary);
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
     }
 
     /* Responsive */
@@ -345,6 +393,36 @@
     .stagger-animation:nth-child(4) { animation-delay: 0.4s; }
     .stagger-animation:nth-child(5) { animation-delay: 0.5s; }
     .stagger-animation:nth-child(6) { animation-delay: 0.6s; }
+
+    /* Alert styling */
+    .alert {
+      border-radius: 0.75rem;
+      padding: 1rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border: none;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .alert-success {
+      background: var(--success-color);
+      color: white;
+    }
+    .alert-info {
+      background: var(--accent-color);
+      color: white;
+    }
+    .alert-warning {
+      background: var(--warning-color);
+      color: white;
+    }
+    .alert-danger {
+      background: var(--danger-color);
+      color: white;
+    }
   </style>
 </head>
 
@@ -352,7 +430,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg">
     <div class="container">
-      <a class="navbar-brand" href="./index.html">
+      <a class="navbar-brand" href="#" onclick="showAllDares()">
         <i class="fas fa-fire"></i>
         Dare Exchange
       </a>
@@ -364,28 +442,34 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link active" href="./index.html">
+            <a class="nav-link active" href="#" onclick="showAllDares()">
               <i class="fas fa-home"></i>
               All Dares
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./create.html">
+          <li class="nav-item" id="createDareNav" style="display: none;">
+            <a class="nav-link" href="#" onclick="showCreateDare()">
               <i class="fas fa-plus-circle"></i>
               Post Dare
             </a>
           </li>
         </ul>
         <ul class="navbar-nav align-items-center">
-          <li class="nav-item d-flex align-items-center gap-3">
-            <span class="navbar-text">
+          <li class="nav-item d-flex align-items-center gap-3" id="userNav" style="display: none;">
+            <span class="navbar-text" id="welcomeText">
               <i class="fas fa-user"></i>
-              Welcome, <strong>Demo User</strong>!
+              Welcome, <strong id="usernameDisplay">User</strong>!
             </span>
-            <a href="./login.html" class="btn btn-outline-primary btn-sm">
+            <button class="btn btn-outline-primary btn-sm" onclick="logout()">
+              <i class="fas fa-sign-out-alt"></i>
+              Logout
+            </button>
+          </li>
+          <li class="nav-item" id="loginNav">
+            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">
               <i class="fas fa-sign-in-alt"></i>
               Login
-            </a>
+            </button>
           </li>
         </ul>
       </div>
@@ -395,203 +479,109 @@
   <!-- Main Content -->
   <div class="main-content">
     <div class="container">
-      <!-- Hero Section -->
-      <div class="hero-section fade-in">
-        <h1 class="hero-title">🎯 Dare Exchange</h1>
-        <p class="hero-subtitle">Challenge yourself and others with exciting dares!</p>
-        <a href="./create.html" class="btn btn-primary btn-lg">
-          <i class="fas fa-plus"></i>
-          Create New Dare
-        </a>
+      <!-- Alert Container -->
+      <div id="alertContainer"></div>
+
+      <!-- All Dares View -->
+      <div id="allDaresView">
+        <!-- Hero Section -->
+        <div class="hero-section fade-in">
+          <h1 class="hero-title">🎯 Dare Exchange</h1>
+          <p class="hero-subtitle">Challenge yourself and others with exciting dares!</p>
+          <button class="btn btn-primary btn-lg" onclick="showCreateDare()" id="heroCreateBtn" style="display: none;">
+            <i class="fas fa-plus"></i>
+            Create New Dare
+          </button>
+        </div>
+
+        <!-- Dares Grid -->
+        <div class="dares-grid" id="daresContainer">
+          <!-- Dares will be loaded here -->
+        </div>
       </div>
 
-      <!-- Dares Grid -->
-      <div class="dares-grid">
-        <!-- Sample Dare 1 -->
-        <div class="dare-card stagger-animation">
-          <div class="card-body">
-            <h5 class="card-title">Create a 30-second dance video</h5>
-            <p class="card-text">Show off your best dance moves in a creative 30-second video. Be original and have fun!</p>
-            
-            <div class="d-flex gap-2 mb-3 flex-wrap">
-              <span class="badge badge-category">Entertainment</span>
-              <span class="badge badge-verified">✅ Verified Complete</span>
-            </div>
-            
-            <div class="user-info">
-              <p>
-                <i class="fas fa-user-edit"></i>
-                <strong>Posted by:</strong> 
-                <span class="badge badge-user">Arjun</span>
-              </p>
-              <p>
-                <i class="fas fa-user-check"></i>
-                <strong>Accepted by:</strong> 
-                <span class="badge badge-user">Priya</span>
-              </p>
-              <p class="rating-info">
-                <i class="fas fa-star"></i>
-                <strong>4.8/5</strong> (5 ratings)
-              </p>
-            </div>
-            
-            <div class="card-action">
-              <a href="./dare-detail.html" class="btn btn-primary btn-card">
-                <i class="fas fa-eye"></i>
-                View Details
-              </a>
+      <!-- Create Dare View -->
+      <div id="createDareView" style="display: none;">
+        <div class="hero-section fade-in">
+          <h1 class="hero-title">🎯 Create New Dare</h1>
+          <p class="hero-subtitle">Challenge the community with your creative dare!</p>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="dare-card">
+              <div class="card-body">
+                <form id="createDareForm">
+                  <div class="mb-3">
+                    <label for="dareTitle" class="form-label">Dare Title</label>
+                    <input type="text" class="form-control" id="dareTitle" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="dareDescription" class="form-label">Description</label>
+                    <textarea class="form-control" id="dareDescription" rows="4" required></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <label for="dareCategory" class="form-label">Category</label>
+                    <select class="form-control" id="dareCategory" required>
+                      <option value="">Choose a category...</option>
+                      <option value="Entertainment">🎭 Entertainment</option>
+                      <option value="Education">📚 Education</option>
+                      <option value="Lifestyle">🏠 Lifestyle</option>
+                      <option value="Travel">✈️ Travel</option>
+                      <option value="DIY">🔨 DIY</option>
+                      <option value="Fitness">💪 Fitness</option>
+                      <option value="Creative">🎨 Creative</option>
+                      <option value="Social">👥 Social</option>
+                    </select>
+                  </div>
+                  <div class="d-flex gap-3 justify-content-end">
+                    <button type="button" class="btn btn-secondary" onclick="showAllDares()">
+                      <i class="fas fa-times"></i>
+                      Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                      <i class="fas fa-paper-plane"></i>
+                      Create Dare
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <!-- Sample Dare 2 -->
-        <div class="dare-card stagger-animation">
-          <div class="card-body">
-            <h5 class="card-title">Learn a new skill in 24 hours</h5>
-            <p class="card-text">Pick any skill you've never tried before and spend 24 hours learning it. Document your progress!</p>
-            
-            <div class="d-flex gap-2 mb-3 flex-wrap">
-              <span class="badge badge-category">Education</span>
-              <span class="badge badge-accepted">🎯 Accepted</span>
-            </div>
-            
-            <div class="user-info">
-              <p>
-                <i class="fas fa-user-edit"></i>
-                <strong>Posted by:</strong> 
-                <span class="badge badge-user">Kavya</span>
-              </p>
-              <p>
-                <i class="fas fa-user-check"></i>
-                <strong>Accepted by:</strong> 
-                <span class="badge badge-user">Rohit</span>
-              </p>
-            </div>
-            
-            <div class="card-action">
-              <a href="./dare-detail.html" class="btn btn-primary btn-card">
-                <i class="fas fa-eye"></i>
-                View Details
-              </a>
-            </div>
-          </div>
+  <!-- Login Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Login to Dare Exchange</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-
-        <!-- Sample Dare 3 -->
-        <div class="dare-card stagger-animation">
-          <div class="card-body">
-            <h5 class="card-title">Cook a meal from a different culture</h5>
-            <p class="card-text">Research and cook an authentic dish from a culture you're not familiar with. Share the results!</p>
-            
-            <div class="d-flex gap-2 mb-3 flex-wrap">
-              <span class="badge badge-category">Lifestyle</span>
-              <span class="badge badge-available">🔥 Available</span>
+        <div class="modal-body">
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="loginUsername" class="form-label">Username</label>
+              <input type="text" class="form-control" id="loginUsername" required>
             </div>
-            
-            <div class="user-info">
-              <p>
-                <i class="fas fa-user-edit"></i>
-                <strong>Posted by:</strong> 
-                <span class="badge badge-user">Aditya</span>
-              </p>
+            <div class="mb-3">
+              <label for="loginPassword" class="form-label">Password</label>
+              <input type="password" class="form-control" id="loginPassword" required>
             </div>
-            
-            <div class="card-action">
-              <a href="./dare-detail.html" class="btn btn-primary btn-card">
-                <i class="fas fa-eye"></i>
-                View Details
-              </a>
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary flex-fill">
+                <i class="fas fa-sign-in-alt"></i>
+                Login
+              </button>
+              <button type="button" class="btn btn-outline-primary flex-fill" onclick="showRegister()">
+                <i class="fas fa-user-plus"></i>
+                Register
+              </button>
             </div>
-          </div>
-        </div>
-
-        <!-- Sample Dare 4 -->
-        <div class="dare-card stagger-animation">
-          <div class="card-body">
-            <h5 class="card-title">Write and perform a 2-minute comedy skit</h5>
-            <p class="card-text">Create an original comedy skit and perform it. Make people laugh with your creativity!</p>
-            
-            <div class="d-flex gap-2 mb-3 flex-wrap">
-              <span class="badge badge-category">Entertainment</span>
-              <span class="badge badge-pending">⏳ Awaiting Verification</span>
-            </div>
-            
-            <div class="user-info">
-              <p>
-                <i class="fas fa-user-edit"></i>
-                <strong>Posted by:</strong> 
-                <span class="badge badge-user">Priya</span>
-              </p>
-              <p>
-                <i class="fas fa-user-check"></i>
-                <strong>Accepted by:</strong> 
-                <span class="badge badge-user">Arjun</span>
-              </p>
-            </div>
-            
-            <div class="card-action">
-              <a href="./dare-detail.html" class="btn btn-primary btn-card">
-                <i class="fas fa-eye"></i>
-                View Details
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Sample Dare 5 -->
-        <div class="dare-card stagger-animation">
-          <div class="card-body">
-            <h5 class="card-title">Take a photo in 5 different countries</h5>
-            <p class="card-text">Travel and take a selfie in 5 different countries. Show the world your adventurous spirit!</p>
-            
-            <div class="d-flex gap-2 mb-3 flex-wrap">
-              <span class="badge badge-category">Travel</span>
-              <span class="badge badge-available">🔥 Available</span>
-            </div>
-            
-            <div class="user-info">
-              <p>
-                <i class="fas fa-user-edit"></i>
-                <strong>Posted by:</strong> 
-                <span class="badge badge-user">Kavya</span>
-              </p>
-            </div>
-            
-            <div class="card-action">
-              <a href="./dare-detail.html" class="btn btn-primary btn-card">
-                <i class="fas fa-eye"></i>
-                View Details
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Sample Dare 6 -->
-        <div class="dare-card stagger-animation">
-          <div class="card-body">
-            <h5 class="card-title">Build something useful from recycled materials</h5>
-            <p class="card-text">Create a functional item using only recycled or upcycled materials. Be creative and eco-friendly!</p>
-            
-            <div class="d-flex gap-2 mb-3 flex-wrap">
-              <span class="badge badge-category">DIY</span>
-              <span class="badge badge-available">🔥 Available</span>
-            </div>
-            
-            <div class="user-info">
-              <p>
-                <i class="fas fa-user-edit"></i>
-                <strong>Posted by:</strong> 
-                <span class="badge badge-user">Rohit</span>
-              </p>
-            </div>
-            
-            <div class="card-action">
-              <a href="./dare-detail.html" class="btn btn-primary btn-card">
-                <i class="fas fa-eye"></i>
-                View Details
-              </a>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -602,60 +592,436 @@
   
   <!-- Custom JavaScript -->
   <script>
+    // Global state
+    let currentUser = null;
+    let dares = [];
+    let users = [];
+
+    // Initialize app
     document.addEventListener('DOMContentLoaded', function() {
-      // Add smooth hover effects
-      const cards = document.querySelectorAll('.dare-card');
-      cards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-          this.style.transform = 'translateY(-8px)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-          this.style.transform = 'translateY(0)';
-        });
-      });
-      
-      // Add click animation to buttons
-      const buttons = document.querySelectorAll('.btn');
-      buttons.forEach(button => {
-        button.addEventListener('click', function(e) {
-          const ripple = document.createElement('span');
-          const rect = this.getBoundingClientRect();
-          const size = Math.max(rect.width, rect.height);
-          const x = e.clientX - rect.left - size / 2;
-          const y = e.clientY - rect.top - size / 2;
-          
-          ripple.style.width = ripple.style.height = size + 'px';
-          ripple.style.left = x + 'px';
-          ripple.style.top = y + 'px';
-          ripple.classList.add('ripple');
-          
-          this.appendChild(ripple);
-          
-          setTimeout(() => {
-            ripple.remove();
-          }, 600);
-        });
-      });
+      loadData();
+      checkAuthStatus();
+      loadDares();
     });
-  </script>
-  
-  <style>
-    .ripple {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
-      transform: scale(0);
-      animation: ripple-animation 0.6s linear;
-      pointer-events: none;
-    }
-    
-    @keyframes ripple-animation {
-      to {
-        transform: scale(4);
-        opacity: 0;
+
+    // Data management
+    function loadData() {
+      // Load users from localStorage
+      const savedUsers = localStorage.getItem('dareExchangeUsers');
+      if (savedUsers) {
+        users = JSON.parse(savedUsers);
+      } else {
+        // Initialize with demo users
+        users = [
+          { id: 1, username: 'Arjun', password: 'demo123' },
+          { id: 2, username: 'Priya', password: 'demo123' },
+          { id: 3, username: 'Kavya', password: 'demo123' },
+          { id: 4, username: 'Rohit', password: 'demo123' },
+          { id: 5, username: 'Aditya', password: 'demo123' }
+        ];
+        saveUsers();
+      }
+
+      // Load dares from localStorage
+      const savedDares = localStorage.getItem('dareExchangeDares');
+      if (savedDares) {
+        dares = JSON.parse(savedDares);
+      } else {
+        // Initialize with demo dares
+        dares = [
+          {
+            id: 1,
+            title: 'Create a 30-second dance video',
+            description: 'Show off your best dance moves in a creative 30-second video. Be original and have fun!',
+            category: 'Entertainment',
+            postedBy: 'Arjun',
+            acceptedBy: 'Priya',
+            status: 'verified',
+            ratings: [5, 5, 4, 5, 5],
+            createdAt: new Date('2024-01-10').toISOString()
+          },
+          {
+            id: 2,
+            title: 'Learn a new skill in 24 hours',
+            description: 'Pick any skill you\'ve never tried before and spend 24 hours learning it. Document your progress!',
+            category: 'Education',
+            postedBy: 'Kavya',
+            acceptedBy: 'Rohit',
+            status: 'accepted',
+            ratings: [],
+            createdAt: new Date('2024-01-12').toISOString()
+          },
+          {
+            id: 3,
+            title: 'Cook a meal from a different culture',
+            description: 'Research and cook an authentic dish from a culture you\'re not familiar with. Share the results!',
+            category: 'Lifestyle',
+            postedBy: 'Aditya',
+            acceptedBy: null,
+            status: 'available',
+            ratings: [],
+            createdAt: new Date('2024-01-15').toISOString()
+          },
+          {
+            id: 4,
+            title: 'Write and perform a 2-minute comedy skit',
+            description: 'Create an original comedy skit and perform it. Make people laugh with your creativity!',
+            category: 'Entertainment',
+            postedBy: 'Priya',
+            acceptedBy: 'Arjun',
+            status: 'completed',
+            ratings: [],
+            createdAt: new Date('2024-01-18').toISOString()
+          },
+          {
+            id: 5,
+            title: 'Take a photo in 5 different countries',
+            description: 'Travel and take a selfie in 5 different countries. Show the world your adventurous spirit!',
+            category: 'Travel',
+            postedBy: 'Kavya',
+            acceptedBy: null,
+            status: 'available',
+            ratings: [],
+            createdAt: new Date('2024-01-20').toISOString()
+          },
+          {
+            id: 6,
+            title: 'Build something useful from recycled materials',
+            description: 'Create a functional item using only recycled or upcycled materials. Be creative and eco-friendly!',
+            category: 'DIY',
+            postedBy: 'Rohit',
+            acceptedBy: null,
+            status: 'available',
+            ratings: [],
+            createdAt: new Date('2024-01-22').toISOString()
+          }
+        ];
+        saveDares();
       }
     }
-  </style>
+
+    function saveUsers() {
+      localStorage.setItem('dareExchangeUsers', JSON.stringify(users));
+    }
+
+    function saveDares() {
+      localStorage.setItem('dareExchangeDares', JSON.stringify(dares));
+    }
+
+    function saveCurrentUser() {
+      if (currentUser) {
+        localStorage.setItem('dareExchangeCurrentUser', JSON.stringify(currentUser));
+      } else {
+        localStorage.removeItem('dareExchangeCurrentUser');
+      }
+    }
+
+    // Authentication
+    function checkAuthStatus() {
+      const savedUser = localStorage.getItem('dareExchangeCurrentUser');
+      if (savedUser) {
+        currentUser = JSON.parse(savedUser);
+        updateNavigation();
+      }
+    }
+
+    function updateNavigation() {
+      const userNav = document.getElementById('userNav');
+      const loginNav = document.getElementById('loginNav');
+      const createDareNav = document.getElementById('createDareNav');
+      const heroCreateBtn = document.getElementById('heroCreateBtn');
+      const usernameDisplay = document.getElementById('usernameDisplay');
+
+      if (currentUser) {
+        userNav.style.display = 'flex';
+        loginNav.style.display = 'none';
+        createDareNav.style.display = 'block';
+        heroCreateBtn.style.display = 'inline-flex';
+        usernameDisplay.textContent = currentUser.username;
+      } else {
+        userNav.style.display = 'none';
+        loginNav.style.display = 'block';
+        createDareNav.style.display = 'none';
+        heroCreateBtn.style.display = 'none';
+      }
+    }
+
+    function login(username, password) {
+      const user = users.find(u => u.username === username && u.password === password);
+      if (user) {
+        currentUser = user;
+        saveCurrentUser();
+        updateNavigation();
+        showAlert('success', `Welcome back, ${username}!`);
+        return true;
+      }
+      return false;
+    }
+
+    function register(username, password) {
+      if (users.find(u => u.username === username)) {
+        return false; // User already exists
+      }
+      
+      const newUser = {
+        id: users.length + 1,
+        username: username,
+        password: password
+      };
+      
+      users.push(newUser);
+      saveUsers();
+      
+      currentUser = newUser;
+      saveCurrentUser();
+      updateNavigation();
+      showAlert('success', `Welcome to Dare Exchange, ${username}!`);
+      return true;
+    }
+
+    function logout() {
+      currentUser = null;
+      saveCurrentUser();
+      updateNavigation();
+      showAlert('info', 'You have been logged out.');
+      showAllDares();
+    }
+
+    // UI Functions
+    function showAlert(type, message) {
+      const alertContainer = document.getElementById('alertContainer');
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert alert-${type}`;
+      alertDiv.innerHTML = `
+        <i class="fas fa-info-circle"></i>
+        ${message}
+      `;
+      
+      alertContainer.appendChild(alertDiv);
+      
+      setTimeout(() => {
+        alertDiv.remove();
+      }, 5000);
+    }
+
+    function showAllDares() {
+      document.getElementById('allDaresView').style.display = 'block';
+      document.getElementById('createDareView').style.display = 'none';
+      
+      // Update active nav
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+      document.querySelector('.nav-link[onclick="showAllDares()"]').classList.add('active');
+      
+      loadDares();
+    }
+
+    function showCreateDare() {
+      if (!currentUser) {
+        showAlert('warning', 'Please login to create a dare.');
+        return;
+      }
+      
+      document.getElementById('allDaresView').style.display = 'none';
+      document.getElementById('createDareView').style.display = 'block';
+      
+      // Update active nav
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+      document.querySelector('.nav-link[onclick="showCreateDare()"]').classList.add('active');
+    }
+
+    function loadDares() {
+      const container = document.getElementById('daresContainer');
+      
+      if (dares.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; background: var(--bg-primary); border-radius: 1rem; padding: 3rem; box-shadow: var(--shadow-md); text-align: center;">
+            <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--text-primary);">No dares available yet!</h3>
+            <p style="font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--text-secondary);">Be the first to post a dare.</p>
+            ${currentUser ? '<button class="btn btn-primary btn-lg" onclick="showCreateDare()"><i class="fas fa-plus"></i> Post First Dare</button>' : ''}
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = dares.map((dare, index) => `
+        <div class="dare-card stagger-animation" style="animation-delay: ${index * 0.1}s;">
+          <div class="card-body">
+            <h5 class="card-title">${dare.title}</h5>
+            <p class="card-text">${dare.description}</p>
+            
+            <div class="d-flex gap-2 mb-3 flex-wrap">
+              <span class="badge badge-category">${dare.category}</span>
+              ${getStatusBadge(dare.status)}
+            </div>
+            
+            <div class="user-info mb-3">
+              <p>
+                <i class="fas fa-user-edit"></i>
+                <strong>Posted by:</strong> 
+                <span class="badge badge-user">${dare.postedBy}</span>
+              </p>
+              ${dare.acceptedBy ? `
+                <p>
+                  <i class="fas fa-user-check"></i>
+                  <strong>Accepted by:</strong> 
+                  <span class="badge badge-user">${dare.acceptedBy}</span>
+                </p>
+              ` : ''}
+              ${dare.ratings.length > 0 ? `
+                <p class="rating-info">
+                  <i class="fas fa-star"></i>
+                  <strong>${(dare.ratings.reduce((a, b) => a + b, 0) / dare.ratings.length).toFixed(1)}/5</strong> (${dare.ratings.length} ratings)
+                </p>
+              ` : ''}
+            </div>
+            
+            <div class="card-action">
+              <button class="btn btn-primary btn-card" onclick="viewDareDetail(${dare.id})">
+                <i class="fas fa-eye"></i>
+                View Details
+              </button>
+              ${getDareActions(dare)}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function getStatusBadge(status) {
+      switch (status) {
+        case 'verified':
+          return '<span class="badge badge-verified">✅ Verified Complete</span>';
+        case 'completed':
+          return '<span class="badge badge-pending">⏳ Awaiting Verification</span>';
+        case 'accepted':
+          return '<span class="badge badge-accepted">🎯 Accepted</span>';
+        default:
+          return '<span class="badge badge-available">🔥 Available</span>';
+      }
+    }
+
+    function getDareActions(dare) {
+      if (!currentUser) return '';
+      
+      let actions = '';
+      
+      if (currentUser.username === dare.postedBy) {
+        actions += `
+          <div class="d-flex gap-2 mt-2">
+            <button class="btn btn-warning" style="flex: 1;" onclick="editDare(${dare.id})">
+              <i class="fas fa-edit"></i> Edit
+            </button>
+            <button class="btn btn-danger" style="flex: 1;" onclick="deleteDare(${dare.id})">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+          </div>
+        `;
+      } else if (!dare.acceptedBy && dare.status === 'available') {
+        actions += `
+          <button class="btn btn-success btn-card mt-2" onclick="acceptDare(${dare.id})">
+            <i class="fas fa-hand-paper"></i> Accept Dare
+          </button>
+        `;
+      }
+      
+      return actions;
+    }
+
+    // Dare actions
+    function acceptDare(dareId) {
+      if (!currentUser) {
+        showAlert('warning', 'Please login to accept dares.');
+        return;
+      }
+      
+      const dare = dares.find(d => d.id === dareId);
+      if (dare) {
+        dare.acceptedBy = currentUser.username;
+        dare.status = 'accepted';
+        saveDares();
+        loadDares();
+        showAlert('success', `You have accepted the dare: "${dare.title}"`);
+      }
+    }
+
+    function deleteDare(dareId) {
+      if (confirm('Are you sure you want to delete this dare?')) {
+        dares = dares.filter(d => d.id !== dareId);
+        saveDares();
+        loadDares();
+        showAlert('info', 'Dare deleted successfully.');
+      }
+    }
+
+    function viewDareDetail(dareId) {
+      const dare = dares.find(d => d.id === dareId);
+      if (dare) {
+        // For now, just show an alert with dare details
+        // In a full implementation, this would navigate to a detail page
+        alert(`Dare: ${dare.title}\n\nDescription: ${dare.description}\n\nCategory: ${dare.category}\nPosted by: ${dare.postedBy}\nStatus: ${dare.status}`);
+      }
+    }
+
+    // Form handlers
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      if (login(username, password)) {
+        bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
+        document.getElementById('loginForm').reset();
+      } else {
+        showAlert('danger', 'Invalid username or password.');
+      }
+    });
+
+    document.getElementById('createDareForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      if (!currentUser) {
+        showAlert('warning', 'Please login to create a dare.');
+        return;
+      }
+      
+      const title = document.getElementById('dareTitle').value;
+      const description = document.getElementById('dareDescription').value;
+      const category = document.getElementById('dareCategory').value;
+      
+      const newDare = {
+        id: dares.length + 1,
+        title: title,
+        description: description,
+        category: category,
+        postedBy: currentUser.username,
+        acceptedBy: null,
+        status: 'available',
+        ratings: [],
+        createdAt: new Date().toISOString()
+      };
+      
+      dares.unshift(newDare); // Add to beginning
+      saveDares();
+      
+      document.getElementById('createDareForm').reset();
+      showAllDares();
+      showAlert('success', 'Dare created successfully!');
+    });
+
+    function showRegister() {
+      const username = prompt('Enter a username:');
+      if (!username) return;
+      
+      const password = prompt('Enter a password:');
+      if (!password) return;
+      
+      if (register(username, password)) {
+        bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
+      } else {
+        showAlert('danger', 'Username already exists. Please choose a different one.');
+      }
+    }
+  </script>
 </body>
 </html>
