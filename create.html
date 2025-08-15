@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Create New Dare - Dare Exchange</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    html {
+      font-size: 75%;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #222;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      z-index: -2;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      25% {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      }
+      50% {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      }
+      75% {
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      }
+    }
+
+    /* Navigation */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-brand {
+      font-weight: 800 !important;
+      font-size: 1.8rem !important;
+      color: #667eea !important;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      letter-spacing: 1px;
+    }
+
+    .navbar-nav .nav-link {
+      color: #333 !important;
+      font-weight: 600;
+      margin: 0 0.5rem;
+      padding: 0.5rem 1rem !important;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .navbar-nav .nav-link:hover {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .navbar-text {
+      color: #fff !important;
+      font-weight: 600;
+      margin-right: 1rem;
+    }
+
+    /* Main content */
+    .container {
+      flex: 1;
+      padding: 2rem 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Form styling */
+    .form-container {
+      max-width: 700px;
+      margin: 0 auto 3rem auto;
+      background: rgba(255,255,255,0.95);
+      padding: 3rem;
+      border-radius: 25px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .form-control {
+      border-radius: 15px;
+      border: 2px solid #e9ecef;
+      padding: 15px 20px;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      background: rgba(255,255,255,0.9);
+    }
+
+    .form-control:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+      background: rgba(255,255,255,1);
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 0.8rem;
+      font-size: 1.1rem;
+    }
+
+    .form-select {
+      border-radius: 15px;
+      border: 2px solid #e9ecef;
+      padding: 15px 20px;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      background: rgba(255,255,255,0.9);
+    }
+
+    .form-select:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+      background: rgba(255,255,255,1);
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      border-radius: 25px;
+      padding: 0.75rem 2rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+      background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+      border: none;
+      border-radius: 25px;
+      padding: 0.75rem 2rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4);
+    }
+
+    /* Animation for page load */
+    .fade-in {
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 2rem 0;
+      margin-top: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <a class="navbar-brand" href="./index.html">
+        <i class="fas fa-fire"></i> Dare Exchange
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="./index.html">
+              <i class="fas fa-home"></i> All Dares
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="./create.html">
+              <i class="fas fa-plus-circle"></i> Post Dare
+            </a>
+          </li>
+        </ul>
+        <ul class="navbar-nav align-items-center">
+          <li class="nav-item d-flex align-items-center">
+            <span class="navbar-text me-3" style="color: #fff !important; font-size: 1rem; font-weight: 600; letter-spacing: 0.3px; margin-bottom: 0;">
+              <i class="fas fa-user"></i> Welcome, <strong>Demo User</strong>!
+            </span>
+            <a href="./login.html" class="btn btn-outline-light btn-sm">
+              <i class="fas fa-sign-out-alt"></i> Login
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container fade-in">
+    <div class="text-center mb-5">
+      <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.2rem;">🎯 Create New Dare 🎯</h1>
+      <p class="lead" style="font-size: 1.2rem; color: #2c3e50; font-weight: 600; margin-bottom: 1.5rem;">Challenge the community with your creative dare!</p>
+    </div>
+
+    <div class="form-container">
+      <form id="dareForm">
+        <div class="mb-4">
+          <label for="title" class="form-label">
+            <i class="fas fa-heading"></i> Dare Title
+          </label>
+          <input type="text" class="form-control" id="title" name="title" placeholder="Enter an exciting dare title..." required>
+        </div>
+
+        <div class="mb-4">
+          <label for="description" class="form-label">
+            <i class="fas fa-align-left"></i> Description
+          </label>
+          <textarea class="form-control" id="description" name="description" rows="5" placeholder="Describe your dare in detail. What should participants do? What are the rules?" required></textarea>
+        </div>
+
+        <div class="mb-4">
+          <label for="category" class="form-label">
+            <i class="fas fa-tags"></i> Category
+          </label>
+          <select class="form-select" id="category" name="category" required>
+            <option value="">Choose a category...</option>
+            <option value="entertainment">🎭 Entertainment</option>
+            <option value="education">📚 Education</option>
+            <option value="lifestyle">🏠 Lifestyle</option>
+            <option value="travel">✈️ Travel</option>
+            <option value="diy">🔨 DIY</option>
+            <option value="fitness">💪 Fitness</option>
+            <option value="creative">🎨 Creative</option>
+            <option value="social">👥 Social</option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label for="difficulty" class="form-label">
+            <i class="fas fa-chart-line"></i> Difficulty Level
+          </label>
+          <select class="form-select" id="difficulty" name="difficulty" required>
+            <option value="">Select difficulty...</option>
+            <option value="easy">🟢 Easy</option>
+            <option value="medium">🟡 Medium</option>
+            <option value="hard">🔴 Hard</option>
+            <option value="extreme">⚫ Extreme</option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label for="timeLimit" class="form-label">
+            <i class="fas fa-clock"></i> Time Limit (Optional)
+          </label>
+          <input type="text" class="form-control" id="timeLimit" name="timeLimit" placeholder="e.g., 24 hours, 1 week, 1 month...">
+        </div>
+
+        <div class="mb-4">
+          <label for="rules" class="form-label">
+            <i class="fas fa-list-ul"></i> Rules & Guidelines (Optional)
+          </label>
+          <textarea class="form-control" id="rules" name="rules" rows="3" placeholder="Any specific rules or guidelines participants should follow?"></textarea>
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <a href="./index.html" class="btn btn-secondary me-md-2">
+            <i class="fas fa-times"></i> Cancel
+          </a>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-paper-plane"></i> Create Dare
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center text-white">
+    <div class="container">
+      <p class="mb-0" style="font-size: 1rem; font-weight: 600;">
+        © 2024 Dare Exchange. Challenge yourself, inspire others! 🎯
+      </p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Custom JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('dareForm');
+      
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(form);
+        const dareData = {
+          title: formData.get('title'),
+          description: formData.get('description'),
+          category: formData.get('category'),
+          difficulty: formData.get('difficulty'),
+          timeLimit: formData.get('timeLimit'),
+          rules: formData.get('rules')
+        };
+        
+        // Simulate form submission
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating...';
+        submitBtn.disabled = true;
+        
+        setTimeout(() => {
+          alert('🎉 Dare created successfully! Redirecting to main page...');
+          window.location.href = './index.html';
+        }, 2000);
+      });
+      
+      // Add form validation feedback
+      const inputs = form.querySelectorAll('input, textarea, select');
+      inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+          if (this.hasAttribute('required') && !this.value.trim()) {
+            this.classList.add('is-invalid');
+          } else {
+            this.classList.remove('is-invalid');
+            this.classList.add('is-valid');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
